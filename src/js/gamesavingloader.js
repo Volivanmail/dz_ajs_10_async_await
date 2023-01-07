@@ -1,12 +1,11 @@
 import read from './reader';
-import toString from './parser';
+import json from './parser';
 import GameSaving from './gamesaving';
 
 export default class GameSavingLoader {
-  static load() {
-    return read()
-      .then((result) => toString(result))
-      .then((result) => JSON.parse(result))
-      .then((result) => new GameSaving(result));
+  static async load() {
+    const data = await read();
+    const value = await json(data);
+    return new GameSaving(JSON.parse(value));
   }
 }
